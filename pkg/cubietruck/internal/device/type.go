@@ -7,5 +7,5 @@ type Reader interface {
 
 // Writer is a interface that represent a output device
 type Writer interface {
-	Write(b []byte) (int, error)
+	Write(b []byte) error
 }

@@ -1,6 +1,8 @@
 package thermal
 
 import (
+	"os"
+
 	"github.com/jesusrj/cubietruck/pkg/cubietruck/internal/device"
 )
 
@@ -14,7 +16,7 @@ type temp struct {
 }
 
 func (t *temp) Read() ([]byte, error) {
-	return nil, nil
+	return os.ReadFile(t.fd)
 }
 
 func New(fd string) Thermal {

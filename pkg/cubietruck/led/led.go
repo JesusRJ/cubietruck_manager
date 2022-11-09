@@ -1,7 +1,6 @@
 package led
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/jesusrj/cubietruck/pkg/cubietruck/internal/device/led"
@@ -39,6 +38,8 @@ var leds = map[Led]led.Led{
 	Blue:   led.New(led_blue),
 }
 
+var Leds = [...]Led{Blue, Orange, White, Green}
+
 // TODO: Qual seria o melhor retorno para Status?
 func ReadStatus(l Led) (Status, error) {
 	ledInstance := leds[l]
@@ -46,10 +47,8 @@ func ReadStatus(l Led) (Status, error) {
 	if err != nil {
 		return Off, err
 	}
-	fmt.Println(b)
 
 	v, _ := strconv.Atoi(string(b))
-	fmt.Printf("Received %d\n", v)
 
 	return Status(v), nil
 }
@@ -57,6 +56,5 @@ func ReadStatus(l Led) (Status, error) {
 func SetStatus(l Led, s Status) error {
 	state := strconv.Itoa(int(s))
 	ledInstance := leds[l]
-	_, err := ledInstance.Write([]byte(state))
-	return err
+	return ledInstance.Write([]byte(state))
 }

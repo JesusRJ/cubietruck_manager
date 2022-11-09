@@ -1,7 +1,6 @@
 package led
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/jesusrj/cubietruck/pkg/cubietruck/internal/device"
@@ -18,34 +17,11 @@ type led struct {
 }
 
 func (l *led) Read() ([]byte, error) {
-	f, err := os.OpenFile(l.fd, os.O_RDWR, 0644)
-	if err != nil {
-		return nil, err
-	}
-
-	defer f.Close()
-
-	var b []byte
-	n, err := f.Read(b)
-
-	if err != nil {
-		return nil, err
-	}
-
-	if n <= 0 {
-		fmt.Println("N is zero")
-	}
-
-	return b, nil
+	return os.ReadFile(l.fd)
 }
 
-func (l *led) Write(b []byte) (int, error) {
-	f, err := os.OpenFile(l.fd, os.O_RDWR, 0644)
-	if err != nil {
-		return 0, err
-	}
-	defer f.Close()
-	return f.Write(b)
+func (l *led) Write(b []byte) error {
+	return os.WriteFile(l.fd, b, 0644)
 }
 
 func New(fd string) Led {
