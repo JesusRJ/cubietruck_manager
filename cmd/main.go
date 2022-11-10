@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/jesusrj/cubietruck/pkg/cubietruck"
-	"github.com/jesusrj/cubietruck/pkg/cubietruck/led"
 )
 
 const (
@@ -33,9 +32,7 @@ func main() {
 }
 
 func printCPUTemp(ct cubietruck.Cubietruck) {
-	ct.LedOn(led.Orange)
 	t, err := ct.CPUTemp()
-	ct.LedOff(led.Orange)
 	if err != nil {
 		return
 	}

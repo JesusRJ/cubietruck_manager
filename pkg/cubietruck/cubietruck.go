@@ -45,7 +45,10 @@ func (c *cubietruck) LedBlink(l led.Led, d time.Duration) error {
 }
 
 func (c *cubietruck) CPUTemp() (uint, error) {
-	return thermal.CPUTemp()
+	c.LedOn(led.Orange)
+	x, err := thermal.CPUTemp()
+	c.LedOff(led.Orange)
+	return x, err
 }
 
 func New() Cubietruck {
